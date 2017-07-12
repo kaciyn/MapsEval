@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_PlaygroundKaciModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AddsForEval_0623">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="AddressLatitude" Type="float" />
+          <Property Name="AddressLongitude" Type="float" />
+          <Property Name="UseOfPremises_Office" Type="bit" />
+          <Property Name="UseOfPremises_ProductionLogistics" Type="bit" />
+          <Property Name="UseOfPremises_Retail" Type="bit" />
+          <Property Name="UseOfPremises_Residential" Type="bit" />
+          <Property Name="StandardOfPremises" Type="int" />
+          <Property Name="StandardOfParkedCars" Type="int" />
+          <Property Name="StandardOfSurroundingArea" Type="int" />
+          <Property Name="EstimatedAgeOfPremises" Type="int" />
+          <Property Name="AddressNotFound" Type="bit" />
+          <Property Name="PremisesNotVisible" Type="bit" />
+          <Property Name="UnclearReviewNeeded" Type="bit" />
+        </EntityType>
+        <EntityType Name="AddsForEval_0623Companies">
+          <Key>
+            <PropertyRef Name="IC" />
+          </Key>
+          <Property Name="AddressID" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="AddressLatitude" Type="float" />
+          <Property Name="AddressLongitude" Type="float" />
+          <Property Name="IC" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="OrderingWeight" Type="int" />
+          <Property Name="TurnovCatFinancialsSSO" Type="nvarchar" MaxLength="512" />
+          <Property Name="NACELabelSK" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <Association Name="FK_AddsForEval_0623Companies_AddsForEval_0623">
+          <End Role="AddsForEval_0623" Type="Self.AddsForEval_0623" Multiplicity="0..1" />
+          <End Role="AddsForEval_0623Companies" Type="Self.AddsForEval_0623Companies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddsForEval_0623">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="AddsForEval_0623Companies">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_PlaygroundKaciModelStoreContainer">
+          <EntitySet Name="AddsForEval_0623" EntityType="Self.AddsForEval_0623" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AddsForEval_0623Companies" EntityType="Self.AddsForEval_0623Companies" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AddsForEval_0623Companies_AddsForEval_0623" Association="Self.FK_AddsForEval_0623Companies_AddsForEval_0623">
+            <End Role="AddsForEval_0623" EntitySet="AddsForEval_0623" />
+            <End Role="AddsForEval_0623Companies" EntitySet="AddsForEval_0623Companies" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_PlaygroundKaciModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AddsForEval_0623">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLatitude" Type="Double" />
+          <Property Name="AddressLongitude" Type="Double" />
+          <Property Name="UseOfPremises_Office" Type="Boolean" />
+          <Property Name="UseOfPremises_ProductionLogistics" Type="Boolean" />
+          <Property Name="UseOfPremises_Retail" Type="Boolean" />
+          <Property Name="UseOfPremises_Residential" Type="Boolean" />
+          <Property Name="StandardOfPremises" Type="Int32" />
+          <Property Name="StandardOfParkedCars" Type="Int32" />
+          <Property Name="StandardOfSurroundingArea" Type="Int32" />
+          <Property Name="EstimatedAgeOfPremises" Type="Int32" />
+          <Property Name="AddressNotFound" Type="Boolean" />
+          <Property Name="PremisesNotVisible" Type="Boolean" />
+          <Property Name="UnclearReviewNeeded" Type="Boolean" />
+          <NavigationProperty Name="AddsForEval_0623Companies" Relationship="Self.FK_AddsForEval_0623Companies_AddsForEval_0623" FromRole="AddsForEval_0623" ToRole="AddsForEval_0623Companies" />
+        </EntityType>
+        <EntityType Name="AddsForEval_0623Companies">
+          <Key>
+            <PropertyRef Name="IC" />
+          </Key>
+          <Property Name="AddressID" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLatitude" Type="Double" />
+          <Property Name="AddressLongitude" Type="Double" />
+          <Property Name="IC" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderingWeight" Type="Int32" />
+          <Property Name="TurnovCatFinancialsSSO" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="NACELabelSK" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AddsForEval_0623" Relationship="Self.FK_AddsForEval_0623Companies_AddsForEval_0623" FromRole="AddsForEval_0623Companies" ToRole="AddsForEval_0623" />
+        </EntityType>
+        <Association Name="FK_AddsForEval_0623Companies_AddsForEval_0623">
+          <End Role="AddsForEval_0623" Type="Self.AddsForEval_0623" Multiplicity="0..1" />
+          <End Role="AddsForEval_0623Companies" Type="Self.AddsForEval_0623Companies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddsForEval_0623">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="AddsForEval_0623Companies">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBConnect" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AddsForEval_0623" EntityType="Self.AddsForEval_0623" />
+          <EntitySet Name="AddsForEval_0623Companies" EntityType="Self.AddsForEval_0623Companies" />
+          <AssociationSet Name="FK_AddsForEval_0623Companies_AddsForEval_0623" Association="Self.FK_AddsForEval_0623Companies_AddsForEval_0623">
+            <End Role="AddsForEval_0623" EntitySet="AddsForEval_0623" />
+            <End Role="AddsForEval_0623Companies" EntitySet="AddsForEval_0623Companies" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_PlaygroundKaciModelStoreContainer" CdmEntityContainer="DBConnect">
+          <EntitySetMapping Name="AddsForEval_0623">
+            <EntityTypeMapping TypeName="DB_PlaygroundKaciModel.AddsForEval_0623">
+              <MappingFragment StoreEntitySet="AddsForEval_0623">
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="AddressLatitude" ColumnName="AddressLatitude" />
+                <ScalarProperty Name="AddressLongitude" ColumnName="AddressLongitude" />
+                <ScalarProperty Name="UseOfPremises_Office" ColumnName="UseOfPremises_Office" />
+                <ScalarProperty Name="UseOfPremises_ProductionLogistics" ColumnName="UseOfPremises_ProductionLogistics" />
+                <ScalarProperty Name="UseOfPremises_Retail" ColumnName="UseOfPremises_Retail" />
+                <ScalarProperty Name="UseOfPremises_Residential" ColumnName="UseOfPremises_Residential" />
+                <ScalarProperty Name="StandardOfPremises" ColumnName="StandardOfPremises" />
+                <ScalarProperty Name="StandardOfParkedCars" ColumnName="StandardOfParkedCars" />
+                <ScalarProperty Name="StandardOfSurroundingArea" ColumnName="StandardOfSurroundingArea" />
+                <ScalarProperty Name="EstimatedAgeOfPremises" ColumnName="EstimatedAgeOfPremises" />
+                <ScalarProperty Name="AddressNotFound" ColumnName="AddressNotFound" />
+                <ScalarProperty Name="PremisesNotVisible" ColumnName="PremisesNotVisible" />
+                <ScalarProperty Name="UnclearReviewNeeded" ColumnName="UnclearReviewNeeded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AddsForEval_0623Companies">
+            <EntityTypeMapping TypeName="DB_PlaygroundKaciModel.AddsForEval_0623Companies">
+              <MappingFragment StoreEntitySet="AddsForEval_0623Companies">
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="AddressLatitude" ColumnName="AddressLatitude" />
+                <ScalarProperty Name="AddressLongitude" ColumnName="AddressLongitude" />
+                <ScalarProperty Name="IC" ColumnName="IC" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OrderingWeight" ColumnName="OrderingWeight" />
+                <ScalarProperty Name="TurnovCatFinancialsSSO" ColumnName="TurnovCatFinancialsSSO" />
+                <ScalarProperty Name="NACELabelSK" ColumnName="NACELabelSK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

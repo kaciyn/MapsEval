@@ -1,0 +1,367 @@
+﻿@using MapsEval.Controllers
+@model MapsEval.Controllers.AddressController.PagedAddressModel
+
+@{
+    //creates address table
+    ViewBag.Title = "ShowAddress";
+    var addressgrid = new WebGrid(source: null, rowsPerPage: Model.PageSize);
+
+    addressgrid.Bind(Model.AddressRowItems, rowCount: Model.TotalRows, autoSortAndPage: false, columnNames: new[] { "Address"} );
+}
+
+@{
+    //creates company table
+    ViewBag.Title = "ShowCompany()";
+    var companygrid = new WebGrid(source: null,canPage:false);
+
+    companygrid.Bind(Model.CompaniesOnAddress, columnNames: new[] { "Name","TurnovCatFinancialsSSO" } );
+}
+    
+@*css*@ 
+<style type="text/css">
+    
+    
+    .address
+    {
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        display: table;
+        border-collapse: collapse;
+        border: solid 1px #C5C5C5;
+        background-color: white;
+    }
+
+
+    .address td, th {
+        border: 1px solid #C5C5C5;
+        padding: 3px 7px 2px;
+    }
+
+    .company
+    {
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        display: table;
+        border-collapse: collapse;
+        border: solid 1px #C5C5C5;
+        background-color: white;
+         
+
+    }
+
+    .company th {
+        border: 1px solid #C5C5C5;
+        padding: 3px 7px 2px;
+    }
+    .company td {
+        border: 1px solid #C5C5C5;
+        padding: 3px 7px 2px;
+    }
+
+    .webgrid-header, .webgrid-header a {
+        background-color: #002d4f;
+        color: #ffffff;
+        text-align: left;
+        text-decoration: none;
+        position: -webkit-sticky;
+
+    }
+
+    .webgrid-row-style {
+        padding: 3px 7px 2px;
+        height: 1.5em;
+    }
+
+    .webgrid-alternating-row {
+        background-color: azure;
+        padding: 3px 7px 2px;
+    }
+
+    div.tab {
+        overflow: hidden;
+    }
+
+    div.tab button {
+        background-color: #008df4;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        transition: 0.3s;
+        color: white;
+        font-size: 110%;
+
+    }
+
+    div.tab button:hover {
+        background-color: #0075c9;
+    }
+
+    div.tab button.active {
+        background-color: #004e87;
+    }
+
+    .tabcontent {
+        display: none;         
+    }
+    
+    .tabcontent iframe {
+        width: 100%;
+        height: 88vh;
+    }
+
+    .checkboxes {
+        padding-top: 5px;
+        padding-left: 10px;
+        color: gainsboro;
+    }
+
+    .savebutton {
+        background-color: #008df4;
+        border: none;
+        color: white;
+        padding: 10px 100px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .grid {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch; 
+
+    }
+    .col {
+        flex: 1;
+        
+    }
+
+    /*With gutters*/ 
+    .gutters {
+        margin: 0 0 0 0;
+    }
+    .gutters > .col {
+        padding: 5px 5px 5px 5px;
+    }
+
+    .grid-80 > .col {
+        flex: 0 0 80%
+    }
+    .grid-20 > .col {
+        flex: 0 0 20%
+    }
+</style>
+
+
+<div class="grid gutters">
+    <div class="col">
+        <div id="gridContent" style="font-family: Arial; ">
+            @addressgrid.GetHtml(tableStyle: "address",
+                headerStyle: "webgrid-header",
+                footerStyle: "webgrid-footer",
+                rowStyle: "webgrid-row-style")
+        </div>
+    </div>
+
+    <div class="col">
+        @*company table*@
+        <div id="gridContent2" style="font-family: Arial; max-height: 5.6em; width: auto; max-width: inherit;           overflow-y: auto;border: 1px solid #7a7a7a;
+                                                                                                             ">
+            @companygrid.GetHtml(tableStyle: "company",
+                headerStyle: "webgrid-header",
+                footerStyle: "webgrid-footer",
+                rowStyle: "webgrid-row-style")
+        </div>
+    </div>
+</div>
+
+
+<div class="grid gutters">
+    <div class="col">
+        <div class="tab">
+            <button class="tablinks" onclick="openMap(event,'Streetview')" id="defaultOpen">Google Streetview</button>
+            <button class="tablinks" onclick="openMap(event,'Gmaps')">Google Maps</button>
+            <button class="tablinks" onclick="openMap(event,'Mapycz')">Mapy.cz</button>
+        </div>
+        
+        <div class="tabcontent" id="Streetview">
+            <iframe src="@Model.MapUrl"></iframe>
+        </div>
+        <div class="tabcontent" id="Gmaps">
+            <iframe src="@Model.GmapsUrl"></iframe>
+        </div>
+        <div class="tabcontent" id="Mapycz">
+            <iframe src="@Model.MapyUrl"></iframe>
+        </div>
+    </div>
+   
+    <div class="grid-20">
+        <div class="col">
+            <div>
+                <div class="checkboxes">
+                    Use of Premises:
+                    <p>
+                        <input type="checkbox" id="OfficeCheckbox"/><label for="OfficeCheckbox"> Office</label></>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="ProdLogCheckbox"/><label for="ProdLogCheckbox"> Production/Logistics</label></>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="ResidentialCheckbox"/><label for="ResidentialCheckbox"> Residential</label></>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="RetailCheckbox"/><label for="RetailCheckbox"> Retail</label></>
+                    </p>
+                    Standard of Premises:
+                    <p><input type="radio" name="PremiseStandard" id="PremiseStandard3" value="3"/><label for="PremiseStandard3"> High-end</></label>
+                    </p>
+                    <p><input type="radio" name="PremiseStandard" id="PremiseStandard2" value="2"/><label for="PremiseStandard2"> Mid-level</></label>
+                    </p>
+                    <p><input type="radio" name="PremiseStandard" id="PremiseStandard1" value="1"/><label for="PremiseStandard1"> Low-end</></label>
+                    </p>
+                    Standard of Parked Cars:
+                    <p><input type="radio" name="StandardOfCars" id="StandardOfCars3" value="3"/><label for="StandardOfCars3"> High-end</></label>
+                    </p>
+                    <p><input type="radio" name="StandardOfCars" id="StandardOfCars2" value="2"/><label for="StandardOfCars2"> Mid-level</></label>
+                    </p>
+                    <p><input type="radio" name="StandardOfCars" id="StandardOfCars1" value="1"/><label for="StandardOfCars1"> Low-end</></label>
+                    </p>
+                    <p><input type="radio" name="StandardOfCars" id="StandardOfCars0" value="0"/><label for="StandardOfCars0"> No cars visible</></label>
+                    </p>
+                    Standard of Surrounding Area:
+                    <p><input type="radio" name="StandardOfArea" id="StandardOfArea3" value="3"/><label for="StandardOfArea3"> High-end</></label>
+                    </p>
+                    <p><input type="radio" name="StandardOfArea" id="StandardOfArea2" value="2"/><label for="StandardOfArea2"> Mid-level</></label>
+                    </p>
+                    <p><input type="radio" name="StandardOfArea" id="StandardOfArea1" value="1"/><label for="StandardOfArea1"> Low-end</></label>
+                    </p>
+                    Age/time since last major renovation:
+                    <p><input type="radio" name="AgeOfPremises" id="AgeOfPremises3" value="3"/><label for="AgeOfPremises3"> 0-10 years</></label>
+                    </p>
+                    <p><input type="radio" name="AgeOfPremises" id="AgeOfPremises2" value="2"/><label for="AgeOfPremises2"> 11-20 years</></label>
+                    </p>
+                    <p><input type="radio" name="AgeOfPremises" id="AgeOfPremises1" value="1"/><label for="AgeOfPremises1"> >20 years</></label>
+                    </p>
+                    Issues:
+                    <p><input type="checkbox" id="AddNotFound"/><label for="AddNotFound"> Address not found</label></>
+                    </p>
+                    <p><input type="checkbox" id="PremisesNotVis"/><label for="PremisesNotVis"> Premises not visible</label></>
+                    </p>
+                    <p><input type="checkbox" id="Unclear"/><label for="Unclear"> Unclear - further review needed</label></>
+                    </p>
+                </div>
+                <button class="savebutton" id="btnSave" onclick="save();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openMap(evt, mapName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(mapName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+<script>
+    document.getElementById("defaultOpen").click();
+</script>
+
+<script src="/Scripts/jquery-3.1.1.min.js" type="text/javascript"></script>
+
+
+
+<script>
+    //persists checkbox selections
+    var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {},
+        $checkboxes = $(":checkbox");
+    var radioValues = JSON.parse(localStorage.getItem('radioValues')) || {},
+        $radios = $(":radio");
+
+    $checkboxes.on("change", function () {
+        $checkboxes.each(function () {
+            checkboxValues[this.id] = this.checked;
+        });
+        localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
+    });
+
+    $radios.on("change", function () {
+        $radios.each(function () {
+            radioValues[this.id] = this.checked;
+        });
+        localStorage.setItem("radioValues", JSON.stringify(radioValues));
+    });
+
+    // On page load
+    $.each(checkboxValues, function (key, value) {
+        $("#" + key).prop('checked', value);
+    });
+    $.each(radioValues, function (key, value) {
+        $("#" + key).prop('checked', value);
+    });
+</script>
+
+
+<script>
+    //saves checkboxes
+    function save() {
+
+        var urlSaveItem = '@Html.Raw(Url.Action("SaveItem"))';
+        var currentItemId = document.getElementById('currentAddressId').value;
+        //var boxes=['OfficeCheckbox', 'ProdLogCheckbox', 'ResidentialCheckbox', 'RetailCheckbox'];
+
+        //for (var i in boxes)
+        //{
+        //    isChecked = document.getElementById(i).checked;
+        //    alert(i+" saved!");
+        //    $.post(urlSaveItem, { AddressId: currentItemId, IsChecked: isChecked }
+        //    );
+
+        isChecked0 = document.getElementById("OfficeCheckbox").checked;
+        isChecked1 = document.getElementById("ProdLogCheckbox").checked;
+        isChecked2 = document.getElementById("ResidentialCheckbox").checked;
+        isChecked3 = document.getElementById("RetailCheckbox").checked;
+        isChecked4 = document.getElementById("AddNotFound").checked;
+        isChecked5 = document.getElementById("PremisesNotVis").checked;
+        isChecked6 = document.getElementById("Unclear").checked;
+
+
+        premiseStandard = document.querySelector('input[name="PremiseStandard"]:checked').value;
+        standardOfCars = document.querySelector('input[name="StandardOfCars"]:checked').value;
+        standardOfArea = document.querySelector('input[name="StandardOfArea"]:checked').value;
+        ageOfPremises = document.querySelector('input[name="AgeOfPremises"]:checked').value;
+
+        $.post(urlSaveItem, { AddressId: currentItemId, IsChecked0: isChecked0, IsChecked1: isChecked1, IsChecked2: isChecked2, IsChecked3: isChecked3, IsChecked4: isChecked4, IsChecked5: isChecked5, IsChecked6: isChecked6, PremiseStandard: premiseStandard, StandardOfCars: standardOfCars, StandardOfArea: standardOfArea, AgeOfPremises: ageOfPremises});
+
+        alert("Changes saved!");
+        location.reload();
+    }
+</script>
+
+
+
+@{
+    if (Model.AddressRowItems.Any())
+    {
+        var addressId = Model.AddressRowItems.First().AddressID;
+        @:<input style="visibility: hidden" value="@addressId" id="currentAddressId" />
+    }
+}

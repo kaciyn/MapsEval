@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapsEval", "MapsEval\MapsEval.csproj", "{D26233F4-C0CC-4F6E-A618-1BAA2EF5CA0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapsEval.Tests", "MapsEval.Tests\MapsEval.Tests.csproj", "{451E3ED3-5996-4544-897B-3E53DC89BB72}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D26233F4-C0CC-4F6E-A618-1BAA2EF5CA0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D26233F4-C0CC-4F6E-A618-1BAA2EF5CA0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D26233F4-C0CC-4F6E-A618-1BAA2EF5CA0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D26233F4-C0CC-4F6E-A618-1BAA2EF5CA0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{451E3ED3-5996-4544-897B-3E53DC89BB72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{451E3ED3-5996-4544-897B-3E53DC89BB72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{451E3ED3-5996-4544-897B-3E53DC89BB72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{451E3ED3-5996-4544-897B-3E53DC89BB72}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
